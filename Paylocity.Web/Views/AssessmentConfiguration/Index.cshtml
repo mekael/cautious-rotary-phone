@@ -1,0 +1,67 @@
+﻿@model Paylocity.Web.Logic.Configuration.Index.BenefitAssessmentIndexQueryResult
+
+@{
+    Layout = "~/Views/AdminLTE/_Layout.cshtml";
+    ViewData["Title"] = "Benefit Assessment Configurations";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+
+    <div>
+        <h4>Benefit Assessment Configurations</h4>
+        <hr />
+
+
+        <div class="row">
+            <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>Start Of Year</th>
+                        <th>Active As Of Date</th>
+                        <th>Inactive As Of Date</th>
+                        <th>Creation Timestamp</th>
+                        <th>Last Modification Timestamp</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var item in Model.BenefitAssessmentIndexQueryResultItems)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(lf=> item.StartOfYear)</td>
+                                <td>@Html.DisplayFor(lf=> item.ActiveAsOfDate)</td>
+                                <td>@Html.DisplayFor(lf=> item.InactiveAsOfDate)</td>
+                                <td>@Html.DisplayFor(lf=> item.CreationTimestamp)</td>
+                                <td>@Html.DisplayFor(lf=> item.LastModificationTimestamp)</td>
+                                <td>@Html.ActionLink("Details", "Details", new { id = item.Id })</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+
+        </div>
+        
+        <div class="row float-right">
+            <ul class="pagination pagination-sm m-0 float-right">
+            <li class="page-item page-link">   @Html.ActionLink( "<<", "Index", new { PageNumber=Model.BenefitAssessmentIndexQuery.PageNumber-1, NumberOfItemsPerPage=Model.BenefitAssessmentIndexQuery.NumberOfItemsPerPage })</li>
+            <li class="page-item page-link">   @Html.DisplayFor(df => Model.BenefitAssessmentIndexQuery.PageNumber)</li>
+            <li class="page-item page-link">   @Html.ActionLink( ">>", "Index", new { PageNumber=Model.BenefitAssessmentIndexQuery.PageNumber+1, NumberOfItemsPerPage=Model.BenefitAssessmentIndexQuery.NumberOfItemsPerPage })</li>
+        </ul>
+        </div>
+
+
+
+    </div>
+
+
+</body>
+</html>

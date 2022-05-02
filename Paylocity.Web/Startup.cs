@@ -10,6 +10,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Paylocity.Web.Logic;
+using Paylocity.Web.Logic.Configuration.Create;
+using Microsoft.EntityFrameworkCore;
+using Paylocity.Web.Logic.Configuration.Index;
+using FluentValidation.AspNetCore;
 
 namespace Paylocity.Web
 {
@@ -25,10 +29,15 @@ namespace Paylocity.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(opts=> opts.UseSqlServer(Configuration.GetConnectionString("PaylocityWeb")));
             services.AddAutoMapper(typeof(MappingProfile));
 
-
-            services.AddControllersWithViews();
+            services.AddTransient<CreateBenefitAssessmentConfigurationHandler>();
+            services.AddTransient<BenefitAssessmentIndexQueryHandler>();
+            services.AddControllersWithViews()
+                                              .AddRazorRuntimeCompilation()
+                                              .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ApplicationDbContext>());
+            ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
